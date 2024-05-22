@@ -3,11 +3,9 @@ kind: Service
 metadata:
   name: backend-service
 spec:
-  type: NodePort
   ports:
     - port: 3000
       targetPort: 3000
-      nodePort: 30050
   selector: 
     app: backend-app
     web: nti
