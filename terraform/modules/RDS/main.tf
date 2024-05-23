@@ -7,8 +7,15 @@ resource "aws_db_instance" "my_rds_instance" {
   password            = aws_secretsmanager_secret_version.rds_password.secret_string
   allocated_storage   = var. allocated_storage 
   vpc_security_group_ids = var.sg
+  db_subnet_group_name = aws_db_subnet_group.my_rds_subnet_group.name
+   
+
 }
 
+resource "aws_db_subnet_group" "my_rds_subnet_group" {
+  name = "my-rds-subnet-group"
+  subnet_ids = var.subnet_ids # List of subnet IDs
+}
 # Create Secrets Manager secrets for RDS username and password
 resource "aws_secretsmanager_secret" "rds_username" {
   name = "rds-username"
