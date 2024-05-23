@@ -30,7 +30,7 @@ services:
       - db
     networks:
       - app-network
-    restart: "unless-stopped"
+    restart: ""
 
   frontend:
     build:
