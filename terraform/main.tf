@@ -1,6 +1,3 @@
-
-
-
 module "nti-cluster" {
     source = "./modules/eks"  
    cluster-name = var.cluster_name   
@@ -28,18 +25,21 @@ module "nti-network" {
     cidr_all=var.cidr-all
 }
 
-# module "nti-rds" {
+module "nti-rds" {
 
-#     source = "./modules/RDS"
-#     db_name = "ntiData" # the same value in index.js 
-#     db_engin = "postgres"
-#     db_version =  "15.6"
-#     db_class =  "db.t3.small"
-#     allocated_storage = 20
-#     sg = [module.nti-network.sg_id]
+    source = "./modules/RDS"
+    db_name = "ntiData" # the same value in index.js 
+    db_engin = "postgres"
+    db_version =  "15.6"
+    db_class =  "db.t3.small"
+    allocated_storage = 20
+    subnet_ids =[ module.nti-network.all-subnets[0],module.nti-network.all-subnets[1],]
+    my_vpc_id = module.nti-network.vpc_id
+
+    sg = [module.nti-network.sg_id]
 
 
-# }
+}
 
 module "nti-ec2" {
 
